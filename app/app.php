@@ -48,6 +48,22 @@
         return $app['twig']->render('categories.html.twig', array('categories' => Category::getAll()));
     });
 
+    //delete
+    //DELETE (all) tasks, then route back to root.
+    //present form on the tasks.html.twig page
+    $app->delete("/delete_tasks", function() use ($app){
+        Task::deleteAll();
+        return $app['twig']->render('index.html.twig');
+    });
+
+    //DELETE (all) categories, then route back to root.
+    //present form on the categories.html.twig page
+    $app->delete("/delete_categories", function() use ($app){
+        Category::deleteAll();
+        return $app['twig']->render('index.html.twig');
+    });
+
+
     return $app;
 
 ?>
