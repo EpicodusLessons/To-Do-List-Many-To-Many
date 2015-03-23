@@ -30,6 +30,18 @@
         return $app['twig']->render('categories.html.twig', array('categories' => Category::getAll()));
     });
 
+    //READ (singular) task
+    $app->get("/tasks/{id}", function($id) use ($app) {
+        $task = Task::find($id);
+        return $app['twig']->render('task.html.twig', array('task' => $task));
+    });
+
+    //READ (singular) category
+    $app->get("/categories/{id}", function($id) use ($app) {
+        $category = Category::find($id);
+        return $app['twig']->render('category.html.twig', array('category' => $category));
+    });
+
     //post
     //CREATE task
     //to get here, send form from tasks.html.twig. shown with get /tasks.
