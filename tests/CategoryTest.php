@@ -47,7 +47,38 @@
 
             //Assert
             $this->assertEquals("Home chores", $result);
+        }
 
+        //Next, let's add the Id property to our Category class. Like any other property it needs a getter and setter.
+        //Create a Category with the id in the constructor and be able to get the id back out.
+        function testGetId()
+        {
+            //Arrange
+            $id = 1;
+            $name = "Kitchen chores";
+            $test_category = new Category($name, $id);
+
+            //Act
+            $result = $test_category->getId();
+
+            //Assert
+            $this->assertEquals(1, $result);
+        }
+
+        //Create a Category with the id in the constructor and be able to change its value, and then get the new id out.
+        function testSetId()
+        {
+            //Arrange
+            $id = 1;
+            $name = "Kitchen chores";
+            $test_category = new Category($name, $id);
+
+            //Act
+            $test_category->setId(2);
+
+            //Assert
+            $result = $test_category->getId();
+            $this->assertEquals(2, $result);
         }
 
     }
