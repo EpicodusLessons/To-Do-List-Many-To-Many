@@ -289,5 +289,30 @@
             $this->assertEquals($test_category->getTasks(), [$test_task, $test_task2]);
         }
 
+        //When we call delete on a category it should delete all mention of that category from both the categories table and the join table.
+        //if we delete the category 'work stuff' and then later ask the 'file reports' task which categories it belongs to, 
+        //we wouldn't want it to tell us it is assigned to one that doesn't exist anymore.
+        //we don't want to delete the task, just any mention of the category it was associated with in the join table.
+        function testDelete()
+        {
+            //Arrange
+            $name = "Work stuff";
+            $id = 1;
+            $test_category = new Category($name, $id);
+            $test_category->save();
+
+            $description = "File reports";
+            $id2 = 2;
+            $test_task = new Task($description, $id2);
+            $test_task->save();
+
+            //Act
+            $test_category->addTask($test_task);
+            $test_category->delete();
+
+            //Assert
+            $this->assertEquals([], $test_task->getCategories());
+        }
+
     }
 ?>

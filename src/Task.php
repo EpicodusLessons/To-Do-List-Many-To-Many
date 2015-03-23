@@ -77,7 +77,10 @@
 
         function delete()
         {
+            //delete any tasks from the tasks table where their id matches the current one.
             $GLOBALS['DB']->exec("DELETE FROM tasks WHERE id = {$this->getId()};");
+            //also delete any rows from the categories_tasks table where the task id is the current one.
+            $GLOBALS['DB']->exec("DELETE FROM categories_tasks WHERE task_id = {$this->getId()};");
         }
 
         function addCategory($category)
