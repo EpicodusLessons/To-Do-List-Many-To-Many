@@ -43,7 +43,7 @@
     });
 
     //READ edit forms
-    
+
     //these routes display an edit form for each class. Since the request is only saying "GET me the edit form and show it to me" these routes can use the GET method.
     //add a link to this route to edit the current task or category from task.html.twig and category.html.twig
     //the edit forms should submit to tasks/{id} and categories/{id} with a patch method.
@@ -106,6 +106,24 @@
         return $app['twig']->render('index.html.twig');
     });
 
+    //delete singular / current category from link on the edit category page.
+    //after deleting the category, render the page to view all categories.
+    $app->delete("/categories/{id}", function($id) use ($app){
+        //get the current category using the id sent in the URL defined in the delete form's action
+        $category = Category::find($id);
+        //delete it
+        $category->delete();
+        return $app['twig']->render('categories.html.twig', array('categories' => Category::getAll()));
+    });
+
+    //delete singular / current task from link on the edit task page.
+    //after deleting the task, render the page to view all tasks.
+    $app->delete("/tasks/{id}", function($id) use ($app){
+        $task = Task::find($id);
+        $task->delete();
+        return $app['twig']->render('tasks.html.twig', array('tasks' => Task::getAll()));
+    });
+
     //patch
     //these two patch routes are called from the edit form for each object
 
@@ -133,9 +151,6 @@
         $category->update($name);
         return $app['twig']->render('category.html.twig', array('category' => $category, 'tasks' => $category->getTasks(), 'all_tasks' => Task::getAll()));
     });
-
-
-    //delete
 
 
     return $app;
