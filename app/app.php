@@ -40,6 +40,14 @@
         return $app['twig']->render('tasks.html.twig', array('tasks' => Task::getAll()));
     });
 
+    //CREATE category
+    $app->post("/categories", function() use ($app) {
+        $name = $_POST['name'];
+        $category = new Category($name);
+        $category->save();
+        return $app['twig']->render('categories.html.twig', array('categories' => Category::getAll()));
+    });
+
     return $app;
 
 ?>
