@@ -16,10 +16,8 @@
     Request::enableHttpMethodParameterOverride();
 
     $app->get("/", function() use ($app) {
-        return "Hi!";
+        return $app['twig']->render('index.html.twig');
     });
-
-    //STILL NOTHING NEW IN MY APP FILE. 
 
     return $app;
 
