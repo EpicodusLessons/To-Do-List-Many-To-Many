@@ -42,6 +42,8 @@
         return $app['twig']->render('category.html.twig', array('category' => $category, 'tasks' => $category->getTasks(), 'all_tasks' => Task::getAll()));
     });
 
+    //READ edit forms
+    
     //these routes display an edit form for each class. Since the request is only saying "GET me the edit form and show it to me" these routes can use the GET method.
     //add a link to this route to edit the current task or category from task.html.twig and category.html.twig
     //the edit forms should submit to tasks/{id} and categories/{id} with a patch method.
