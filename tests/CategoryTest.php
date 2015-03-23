@@ -230,5 +230,64 @@
             $this->assertEquals([$test_category2], Category::getAll());
         }
 
+        //This addTask() method will assign a Task object to the current Category object by saving their ids in the join table.
+        function testAddTask()
+        {
+            //Arrange
+            //We need a category and a task saved
+            $name = "Work stuff";
+            $id = 1;
+            $test_category = new Category($name, $id);
+            $test_category->save();
+
+            $description = "File reports";
+            $id2 = 2;
+            $test_task = new Task($description, $id2);
+            $test_task->save();
+
+            //Act
+            //call add task method on test category to assign test task to it.
+            //add task method takes an entire Task object as input and assigns it to the category the method has been called on.
+            $test_category->addTask($test_task);
+
+            //Assert
+            //now if we get the tasks associated with the category we should get the one we assigned back
+            //our test task should be returned in an array because there can be more than one task associated with a category.
+            //we still need to write the getTasks() method to get the tasks associated with the category, 
+            //but now we know how we want to use it.
+            $this->assertEquals($test_category->getTasks(), [$test_task]);
+        }
+
+        //Now we write a test for the getTasks method since we need it to be able to test the Add Task method. 
+        function testGetTasks()
+        {
+            //Arrange
+            //start with a category
+            $name = "Home stuff";
+            $id = 1;
+            $test_category = new Category($name, $id);
+            $test_category->save();
+
+            //create 2 tasks to assign to it.
+            $description = "Wash the dog";
+            $id2 = 2;
+            $test_task = new Task($description, $id2);
+            $test_task->save();
+
+            $description2 = "Take out the trash";
+            $id3 = 3;
+            $test_task2 = new Task($description2, $id3);
+            $test_task2->save();
+
+            //Act
+            //add both tasks to the category
+            $test_category->addTask($test_task);
+            $test_category->addTask($test_task2);
+
+            //Assert
+            //we should get both of them back when we call getTasks on the test category.
+            $this->assertEquals($test_category->getTasks(), [$test_task, $test_task2]);
+        }
+
     }
 ?>
