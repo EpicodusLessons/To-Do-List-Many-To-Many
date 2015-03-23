@@ -30,6 +30,21 @@
         {
             $this->id = (int) $new_id;
         }
+
+        function save()
+        {
+            return null;
+        }
+
+        static function getAll()
+        {
+            return null;
+        }
+
+        static function deleteAll()
+        {
+            return null;
+        }
     }
 
 
