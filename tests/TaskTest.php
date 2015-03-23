@@ -24,6 +24,7 @@
             //Arrange
             $description = "Do dishes.";
             $test_task = new Task($description);
+            //No need to save here because we are communicating with the object only and not the database.
 
             //Act
             $result = $test_task->getDescription();
@@ -38,6 +39,7 @@
             //Arrange
             $description = "Do dishes.";
             $test_task = new Task($description);
+            //No need to save here because we are communicating with the object only and not the database.
 
             //Act
             $test_task->setDescription("Drink coffee.");
