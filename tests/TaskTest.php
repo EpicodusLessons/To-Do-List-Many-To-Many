@@ -15,7 +15,7 @@
     {
         protected function tearDown()
         {
-
+            Task::deleteAll();
         }
 
         //Initialize a Task with a description and be able to get it back out of the object using getDescription().
