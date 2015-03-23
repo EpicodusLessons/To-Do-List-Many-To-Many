@@ -16,6 +16,7 @@
         protected function tearDown()
         {
             Task::deleteAll();
+            Category::deleteAll();
         }
 
         //Initialize a Task with a description and be able to get it back out of the object using getDescription().
@@ -209,6 +210,44 @@
             //Assert
             //we should get the same object back out of the search as the one we were looking for if our search works correctly.
             $this->assertEquals($test_task, $result);
+        }
+
+        function testUpdate()
+        {
+            //Arrange
+            $description = "Wash the dog";
+            $id = 1;
+            $test_task = new Task($description, $id);
+            $test_task->save();
+
+            $new_description = "Clean the dog";
+
+            //Act
+            $test_task->update($new_description);
+
+            //Assert
+            $this->assertEquals("Clean the dog", $test_task->getDescription());
+        }
+
+        function testDeleteTask()
+        {
+            //Arrange
+            $description = "Wash the dog";
+            $id = 1;
+            $test_task = new Task($description, $id);
+            $test_task->save();
+
+            $description2 = "Water the lawn";
+            $id2 = 2;
+            $test_task2 = new Task($description2, $id2);
+            $test_task2->save();
+
+
+            //Act
+            $test_task->delete();
+
+            //Assert
+            $this->assertEquals([$test_task2], Task::getAll());
         }
         
     }
