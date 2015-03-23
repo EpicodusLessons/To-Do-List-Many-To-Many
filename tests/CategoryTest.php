@@ -19,7 +19,7 @@
         }
 
         //Initialize a Category with a name and be able to get it back out of the object using getName().
-        function test_getName()
+        function testGetName()
         { 
             //Arrange
             $name = "Kitchen chores";
@@ -34,7 +34,7 @@
 
         }
 
-        function test_setName()
+        function testSetName()
         { //can I change the name in the object with setName() after initializing it?
             //Arrange
             $name = "Kitchen chores";
