@@ -164,5 +164,34 @@
             $this->assertEquals([], $result);
         }
 
+        //Test for find category method.
+        //Static method to select a category using its id number as input.
+        function testFind()
+        {
+            //Arrange
+            //Create and save 2 categories.
+            $name = "Wash the dog";
+            $id = 1;
+            $test_category = new Category($name, $id);
+            $test_category->save();
+
+            $name2 = "Home stuff";
+            $id2 = 2;
+            $test_category2 = new Category($name2, $id2);
+            $test_category2->save();
+
+            //Act
+            //search using the id of the first category.
+            $result = Category::find($test_category->getId());
+
+            //Assert
+            //if the search function works then result should be the first category.
+            //ids are unique so this method will always return a single instance. 
+            //no need for returning an array like in getAll.
+            $this->assertEquals($test_category, $result);
+        }
+
+        
+
     }
 ?>
