@@ -50,6 +50,38 @@
 
         }
 
+        //Next, let's add the Id. property to our Task class. Like any other property it needs a getter and setter.
+        //Create a Task with the id in the constructor and be able to get the id back out.
+        function testGetId()
+        {
+            //Arrange
+            $id = 1;
+            $description = "Wash the dog";
+            $test_task = new Task($description, $id);
+
+            //Act
+            $result = $test_task->getId();
+
+            //Assert
+            $this->assertEquals(1, $result);
+        }
+
+        //Create a Task with the id in the constructor and be able to change its value, and then get the new id out.
+        function testSetId()
+        {
+            //Arrange
+            $id = 1;
+            $description = "Wash the dog";
+            $test_task = new Task($description, $id);
+
+            //Act
+            $test_task->setId(2);
+
+            //Assert
+            $result = $test_task->getId();
+            $this->assertEquals(2, $result);
+        }
+
 
         
     }
