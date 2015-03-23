@@ -82,12 +82,37 @@
 
         function getTasks()
         {
-            return null;
+            //get all task ids
+            //from the join table where task ids are stored with category ids
+            //return the task ids which correspond to category ids equal to the current category's id.
+            $query = $GLOBALS['DB']->query("SELECT task_id FROM categories_tasks WHERE category_id = {$this->getId()};");
+            $task_ids = $query->fetchAll(PDO::FETCH_ASSOC); //format task ids as an associative array.
+
+            $tasks = array(); //create an empty array to return at the end filled with all tasks assigned to current category's id.
+            foreach($task_ids as $id) { //go through each task_id and store it in $id
+                $task_id = $id['task_id'];              //pull out its value with the key 'task_id' and store it in variable $task_id
+                
+                //get all tasks matching the current task id out of the tasks table (including their description). 
+                $result = $GLOBALS['DB']->query("SELECT * FROM tasks WHERE id = {$task_id};"); 
+                //format as associative array and store in $returned_task.
+                $returned_task = $result->fetchAll(PDO::FETCH_ASSOC);
+
+                //get the task's description and id by looking in the first item in $returned_task under the column names as keys.
+                $description = $returned_task[0]['description'];
+                $id = $returned_task[0]['id'];
+
+                //instantiate a task object using the data from the current task table row, just like in getAll.
+                $new_task = new Task($description, $id);
+                //push it into the $tasks array to be output after loop.
+                array_push($tasks, $new_task);
+            }
+            return $tasks;
         }
 
         function addTask($task)
         {
-            return null;
+            //save the id of the current category with the id of the input $task into a row in the join table called categories_tasks.
+            $GLOBALS['DB']->exec("INSERT INTO categories_tasks (category_id, task_id) VALUES ({$this->getId()}, {$task->getId()});");
         }
     }
 
