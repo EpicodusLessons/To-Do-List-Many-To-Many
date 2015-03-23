@@ -19,6 +19,17 @@
         return $app['twig']->render('index.html.twig');
     });
 
+    //gets
+    //READ (all) tasks
+    $app->get("/tasks", function() use ($app) {
+        return $app['twig']->render('tasks.html.twig', array('tasks' => Task::getAll()));
+    });
+
+    //READ (all) categories
+    $app->get("/categories", function() use ($app) {
+        return $app['twig']->render('categories.html.twig', array('categories' => Category::getAll()));
+    });
+
     return $app;
 
 ?>

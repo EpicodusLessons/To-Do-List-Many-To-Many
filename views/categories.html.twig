@@ -1,0 +1,18 @@
+<html>
+<head>
+    <title>To Do List</title>
+</head>
+<body>
+    <h1>Categories</h1>
+
+    {% if categories is not empty %}
+        <p>Here are all your categories:</p>
+        <ul>
+            {% for category in categories %}
+                <li><a href="/categories/{{ category.getId }}">{{ category.getName }}</a></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+</body>
+</html>
