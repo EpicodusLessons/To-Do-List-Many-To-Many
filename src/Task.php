@@ -55,6 +55,11 @@
         {
             $GLOBALS['DB']->exec("DELETE FROM tasks *;");
         }
+
+        static function find($search_id)
+        {
+            return null;
+        }
         
     }
 

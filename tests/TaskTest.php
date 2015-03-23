@@ -176,6 +176,40 @@
             $result = Task::getAll();
             $this->assertEquals([], $result);
         }
+
+        //We have Create, Read (all), Delete (all). What's left in CRUD? 
+        //Read sigular (view a single task), 
+        //Update (edit an existing singular task), 
+        //Delete (singular - remove task the method is called on.)
+        //All of these require us to be able to select a Task by its unique id. So the FIND method is next.
+
+        //find() method should take an id as input and return the corresponding task. 
+        //since it must search through all tasks it should be a static method.
+        function testFind()
+        {
+            //Arrange
+            //To test a search function we must have some tasks to search through.
+            //Create and save 2 tasks.
+            $description = "Wash the dog";
+            $id = 1;
+            $test_task = new Task($description, $id);
+            $test_task->save();
+
+            $description2 = "Water the lawn";
+            $id2 = 2;
+            $test_task2 = new Task($description2, $id2);
+            $test_task2->save();
+
+            //Act
+            //call the method we intend to write. 
+            //look through all tasks for the task matching the first task's assigned id number.
+            //store the output in $result.
+            $result = Task::find($test_task->getId());
+
+            //Assert
+            //we should get the same object back out of the search as the one we were looking for if our search works correctly.
+            $this->assertEquals($test_task, $result);
+        }
         
     }
 ?>
