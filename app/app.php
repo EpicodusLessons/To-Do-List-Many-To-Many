@@ -42,6 +42,19 @@
         return $app['twig']->render('category.html.twig', array('category' => $category, 'tasks' => $category->getTasks(), 'all_tasks' => Task::getAll()));
     });
 
+    //these routes display an edit form for each class. Since the request is only saying "GET me the edit form and show it to me" these routes can use the GET method.
+    //add a link to this route to edit the current task or category from task.html.twig and category.html.twig
+    //the edit forms should submit to tasks/{id} and categories/{id} with a patch method.
+    $app->get("/tasks/{id}/edit", function($id) use ($app) {
+        $task = Task::find($id);
+        return $app['twig']->render('task_edit.html.twig', array('task' => $task));
+    });
+
+    $app->get("/categories/{id}/edit", function($id) use ($app) {
+        $category = Category::find($id);
+        return $app['twig']->render('category_edit.html.twig', array('category' => $category));
+    });
+
     //post
     //CREATE task
     //to get here, send form from tasks.html.twig. shown with get /tasks.
@@ -90,6 +103,37 @@
         Category::deleteAll();
         return $app['twig']->render('index.html.twig');
     });
+
+    //patch
+    //these two patch routes are called from the edit form for each object
+
+    //AFTER EDITING A TASK
+    //we need to pass in: 
+    //the current task that has just been edited under 'task'
+    //as well as all categories associated with the current task so that they can be displayed under 'categories'
+    //as well as all categories that have been created under 'all_categories' so that they can be included in the dropdown menu and new categories from the list can be assigned to the current task.
+    $app->patch("/tasks/{id}", function($id) use ($app) {
+        $description = $_POST['description'];
+        $task = Task::find($id);
+        $task->update($description);
+        return $app['twig']->render('task.html.twig', array('task' => $task, 'categories' => $task->getCategories(), 'all_categories' => Category::getAll()));
+    });
+
+
+    //AFTER EDITING A CATEGPRU
+    //we need to pass in: 
+    //the current category that has just been edited under 'category'
+    //as well as all tasks associated with the current category so that they can be displayed under 'tasks'
+    //as well as all tasks that have been created under 'all_tasks' so that they can be included in the dropdown menu and new tasks from the list can be assigned to the current category.
+    $app->patch("/categories/{id}", function($id) use ($app) {
+        $name = $_POST['name'];
+        $category = Category::find($id);
+        $category->update($name);
+        return $app['twig']->render('category.html.twig', array('category' => $category, 'tasks' => $category->getTasks(), 'all_tasks' => Task::getAll()));
+    });
+
+
+    //delete
 
 
     return $app;
